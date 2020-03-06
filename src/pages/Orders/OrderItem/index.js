@@ -5,33 +5,49 @@ import { Container, FirstItem, LastItem, Badge } from './styles';
 
 export default function OrderItem({ order }) {
   const [visible, setVisible] = useState(false);
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState({});
 
   useEffect(() => {
     function defineStatus() {
       if (order.canceled_at) {
-        return setStatus('CANCELADA');
+        return setStatus({
+          text: 'CANCELADA',
+          color: '#DE3B3B',
+          background: '#FAB0B0',
+        });
       }
 
       if (!order.start_date) {
-        return setStatus('PENDENTE');
+        return setStatus({
+          text: 'PENDENTE',
+          color: '#c1bc35',
+          background: '#f0f0df',
+        });
       }
       if (!order.end_date) {
-        return setStatus('RETIRADA');
+        return setStatus({
+          text: 'RETIRADA',
+          color: '#4D85EE',
+          background: '#BAD2FF',
+        });
       }
 
-      return setStatus('ENTREGUE');
+      return setStatus({
+        text: 'ENTREGUE',
+        color: '#2CA42B',
+        background: '#DFF0DF',
+      });
     }
 
     defineStatus();
-  }, []);
+  }, [order]);
 
   function handleToggleVisible() {
     setVisible(!visible);
   }
 
   return (
-    <Container>
+    <Container statusColor={status.color} statusBackground={status.background}>
       <td>
         <FirstItem>#{order.id}</FirstItem>
       </td>
@@ -48,7 +64,12 @@ export default function OrderItem({ order }) {
         <div>{order.recipient.state}</div>
       </td>
       <td>
-        <div>{status}</div>
+        <div>
+          <div>
+            <div />
+            <strong>{status.text}</strong>
+          </div>
+        </div>
       </td>
       <td>
         <LastItem>
