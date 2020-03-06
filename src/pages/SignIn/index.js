@@ -4,7 +4,7 @@ import { Form } from '@unform/web';
 import * as Yup from 'yup';
 
 import Input from '~/components/Input';
-import Button from '~/components/Button';
+import Button from './styles';
 
 import { signInRequest } from '~/store/modules/auth/actions';
 

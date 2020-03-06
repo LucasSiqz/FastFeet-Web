@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-import OrderItem from './OrderItem';
-
-import history from '~/services/history';
 import api from '~/services/api';
+import history from '~/services/history';
+
+import OrderItem from './OrderItem';
+import AddButton from '~/components/AddButton';
 
 import { Container, InitialContent, OrdersList, ItemsTitles } from './styles';
 
@@ -27,7 +28,7 @@ export default function Orders() {
         <strong>Gerenciando encomendas</strong>
         <aside>
           <div>inputSearch</div>
-          <div>Add button</div>
+          <AddButton onClick={() => history.push('/')} />
         </aside>
       </InitialContent>
       <OrdersList>
