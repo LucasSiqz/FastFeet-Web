@@ -1,10 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { MdMoreHoriz } from 'react-icons/md';
+import {
+  MdMoreHoriz,
+  MdEdit,
+  MdDeleteForever,
+  MdRemoveRedEye,
+} from 'react-icons/md';
 
 import DefaultAvatar from '~/components/DefaultAvatar';
 
-import { Container, FirstItem, LastItem, Badge } from './styles';
+import {
+  Container,
+  FirstItem,
+  LastItem,
+  Badge,
+  OptionsList,
+  Option,
+  LastOption,
+  Button,
+  OptionsContainer,
+} from './styles';
 
 export default function OrderItem({ order }) {
   const [visible, setVisible] = useState(false);
@@ -87,9 +102,31 @@ export default function OrderItem({ order }) {
       </td>
       <td>
         <LastItem>
-          <Badge onClick={handleToggleVisible}>
-            <MdMoreHoriz color="#C6C6C6" size={25} />
-          </Badge>
+          <OptionsContainer>
+            <Badge onClick={handleToggleVisible}>
+              <MdMoreHoriz color="#C6C6C6" size={25} />
+            </Badge>
+            <OptionsList visible={visible}>
+              <Option>
+                <Button onClick={() => {}}>
+                  <MdRemoveRedEye color="#8E5BE8" size={16} />
+                  <p>Visualizar</p>
+                </Button>
+              </Option>
+              <Option>
+                <Button onClick={() => {}}>
+                  <MdEdit color="#4D85EE" size={16} />
+                  <p>Editar</p>
+                </Button>
+              </Option>
+              <LastOption>
+                <Button onClick={() => {}}>
+                  <MdDeleteForever color="#DE3B3B" size={16} />
+                  <p>Excluir</p>
+                </Button>
+              </LastOption>
+            </OptionsList>
+          </OptionsContainer>
         </LastItem>
       </td>
     </Container>
