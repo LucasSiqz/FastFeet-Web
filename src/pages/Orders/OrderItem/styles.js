@@ -13,6 +13,15 @@ export const Container = styled.tr`
       background: #fff;
       margin-bottom: 21px;
       color: #666666;
+      display: flex;
+      align-items: center;
+
+      img {
+        border-radius: 50%;
+        margin-right: 5px;
+        width: 35px;
+        height: 35px;
+      }
 
       div {
         display: flex;
@@ -49,7 +58,8 @@ export const FirstItem = styled.div`
 `;
 
 export const LastItem = styled.div`
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
   height: 57px;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;

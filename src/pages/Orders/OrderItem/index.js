@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { MdMoreHoriz } from 'react-icons/md';
+
+import DefaultAvatar from '~/components/DefaultAvatar';
 
 import { Container, FirstItem, LastItem, Badge } from './styles';
 
@@ -55,7 +58,18 @@ export default function OrderItem({ order }) {
         <div>{order.recipient.recipient_name}</div>
       </td>
       <td>
-        <div>{order.deliveryman.name}</div>
+        <div>
+          {order.deliveryman.avatar ? (
+            <img
+              src={order.deliveryman.avatar.url}
+              alt={order.deliveryman.name}
+            />
+          ) : (
+            <DefaultAvatar name={order.deliveryman.name} size={35} />
+          )}
+
+          {order.deliveryman.name}
+        </div>
       </td>
       <td>
         <div>{order.recipient.city}</div>
@@ -81,3 +95,7 @@ export default function OrderItem({ order }) {
     </Container>
   );
 }
+
+OrderItem.propTypes = {
+  order: PropTypes.object.isRequired,
+};
