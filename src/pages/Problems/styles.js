@@ -32,6 +32,7 @@ export const ItemsTitles = styled.tr`
 
   th:first-child {
     padding-left: 13px;
+    width: 237px;
   }
 
   th {
