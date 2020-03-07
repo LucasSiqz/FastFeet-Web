@@ -3,55 +3,54 @@ import React, { useEffect, useState } from 'react';
 import api from '~/services/api';
 import history from '~/services/history';
 
-import DeliverymenItem from './DeliverymenItem';
+import RecipientItem from './RecipientItem';
 import AddButton from '~/components/AddButton';
 
 import {
   Container,
   InitialContent,
-  DeliverymenList,
+  RecipientsList,
   ItemsTitles,
 } from './styles';
 
-export default function Deliverymen() {
-  const [deliverymen, setDeliverymen] = useState([]);
+export default function Recipients() {
+  const [recipients, setRecipients] = useState([]);
 
   useEffect(() => {
-    async function loadDeliverymen() {
-      const response = await api.get('deliverymans');
+    async function loadRecipients() {
+      const response = await api.get('recipients');
       const { data } = response;
 
-      setDeliverymen(data);
+      setRecipients(data);
     }
 
-    loadDeliverymen();
+    loadRecipients();
   }, []);
 
   return (
     <Container>
       <InitialContent>
-        <strong>Gerenciando entregadores</strong>
+        <strong>Gerenciando destinatários</strong>
         <aside>
           <div>inputSearch</div>
           <AddButton onClick={() => history.push('/')} />
         </aside>
       </InitialContent>
-      <DeliverymenList>
+      <RecipientsList>
         <thead>
           <ItemsTitles>
             <th>ID</th>
-            <th>Foto</th>
             <th>Nome</th>
-            <th>Email</th>
+            <th>Endereço</th>
             <th>Ações</th>
           </ItemsTitles>
         </thead>
         <tbody>
-          {deliverymen.map(deliveryman => (
-            <DeliverymenItem key={deliveryman.id} deliveryman={deliveryman} />
+          {recipients.map(recipient => (
+            <RecipientItem key={recipient.id} recipient={recipient} />
           ))}
         </tbody>
-      </DeliverymenList>
+      </RecipientsList>
     </Container>
   );
 }
