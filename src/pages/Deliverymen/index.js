@@ -41,7 +41,7 @@ export default function Deliverymen() {
         <strong>Gerenciando entregadores</strong>
         <aside>
           <SearchInput onChange={onChange} placeholder="entregadores" />
-          <AddButton onClick={() => history.push('/')} />
+          <AddButton onClick={() => history.push('/deliverymen/new')} />
         </aside>
       </InitialContent>
       <DeliverymenList>

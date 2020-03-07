@@ -6,18 +6,18 @@ export const Container = styled.div`
 
   button {
     display: flex;
-    padding-left: 21px;
-    padding-right: 16px;
+    justify-content: center;
     align-items: center;
     height: 36px;
-    background: #7d40e7;
+    width: 112px;
+    background: #cccccc;
     color: #fff;
     border: 0;
     border-radius: 4px;
     transition: background 0.2s;
 
     &:hover {
-      background: ${darken(0.06, '#7d40e7')};
+      background: ${darken(0.06, '#CCCCCC')};
     }
 
     svg {

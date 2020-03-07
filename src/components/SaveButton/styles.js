@@ -6,9 +6,9 @@ export const Container = styled.div`
 
   button {
     display: flex;
-    padding-left: 21px;
-    padding-right: 16px;
+    justify-content: center;
     align-items: center;
+    width: 112px;
     height: 36px;
     background: #7d40e7;
     color: #fff;
