@@ -28,12 +28,19 @@ export default function Deliverymen() {
     loadDeliverymen();
   }, []);
 
+  async function onChange(event) {
+    const response = await api.get(`deliverymans?name=${event.target.value}`);
+    const { data } = response;
+
+    setDeliverymen(data);
+  }
+
   return (
     <Container>
       <InitialContent>
         <strong>Gerenciando entregadores</strong>
         <aside>
-          <SearchInput onChange={() => {}} placeholder="entregadores" />
+          <SearchInput onChange={onChange} placeholder="entregadores" />
           <AddButton onClick={() => history.push('/')} />
         </aside>
       </InitialContent>

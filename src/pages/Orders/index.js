@@ -23,12 +23,19 @@ export default function Orders() {
     loadOrders();
   }, []);
 
+  async function onChange(event) {
+    const response = await api.get(`orders?product=${event.target.value}`);
+    const { data } = response;
+
+    setOrders(data);
+  }
+
   return (
     <Container>
       <InitialContent>
         <strong>Gerenciando encomendas</strong>
         <aside>
-          <SearchInput onChange={() => {}} placeholder="encomendas" />
+          <SearchInput onChange={onChange} placeholder="encomendas" />
           <AddButton onClick={() => history.push('/')} />
         </aside>
       </InitialContent>

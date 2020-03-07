@@ -28,8 +28,13 @@ export default function Recipients() {
     loadRecipients();
   }, []);
 
-  function onChange(event) {
-    console.log(event.target.value);
+  async function onChange(event) {
+    const response = await api.get(
+      `recipients?recipient=${event.target.value}`
+    );
+    const { data } = response;
+
+    setRecipients(data);
   }
 
   return (

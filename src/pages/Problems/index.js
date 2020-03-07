@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 import api from '~/services/api';
-import history from '~/services/history';
 
 import ProblemItem from './ProblemItem';
-import AddButton from '~/components/AddButton';
 
 import { Container, InitialContent, ProblemList, ItemsTitles } from './styles';
 
