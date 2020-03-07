@@ -5,6 +5,7 @@ import history from '~/services/history';
 
 import RecipientItem from './RecipientItem';
 import AddButton from '~/components/AddButton';
+import SearchInput from '~/components/SearchInput';
 
 import {
   Container,
@@ -27,12 +28,16 @@ export default function Recipients() {
     loadRecipients();
   }, []);
 
+  function onChange(event) {
+    console.log(event.target.value);
+  }
+
   return (
     <Container>
       <InitialContent>
         <strong>Gerenciando destinatários</strong>
         <aside>
-          <div>inputSearch</div>
+          <SearchInput onChange={onChange} placeholder="destinatários" />
           <AddButton onClick={() => history.push('/')} />
         </aside>
       </InitialContent>

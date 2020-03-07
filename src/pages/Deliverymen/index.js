@@ -5,6 +5,7 @@ import history from '~/services/history';
 
 import DeliverymenItem from './DeliverymenItem';
 import AddButton from '~/components/AddButton';
+import SearchInput from '~/components/SearchInput';
 
 import {
   Container,
@@ -32,7 +33,7 @@ export default function Deliverymen() {
       <InitialContent>
         <strong>Gerenciando entregadores</strong>
         <aside>
-          <div>inputSearch</div>
+          <SearchInput onChange={() => {}} placeholder="entregadores" />
           <AddButton onClick={() => history.push('/')} />
         </aside>
       </InitialContent>

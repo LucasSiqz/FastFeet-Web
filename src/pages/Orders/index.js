@@ -5,6 +5,7 @@ import history from '~/services/history';
 
 import OrderItem from './OrderItem';
 import AddButton from '~/components/AddButton';
+import SearchInput from '~/components/SearchInput';
 
 import { Container, InitialContent, OrdersList, ItemsTitles } from './styles';
 
@@ -27,7 +28,7 @@ export default function Orders() {
       <InitialContent>
         <strong>Gerenciando encomendas</strong>
         <aside>
-          <div>inputSearch</div>
+          <SearchInput onChange={() => {}} placeholder="encomendas" />
           <AddButton onClick={() => history.push('/')} />
         </aside>
       </InitialContent>
