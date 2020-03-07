@@ -27,7 +27,9 @@ export default function ProblemItem({ problem }) {
         <FirstItem>#{problem.id}</FirstItem>
       </td>
       <td>
-        <div>{problem.description}</div>
+        <div>
+          <p>{problem.description}</p>
+        </div>
       </td>
       <td>
         <LastItem>

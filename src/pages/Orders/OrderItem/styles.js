@@ -16,6 +16,13 @@ export const Container = styled.tr`
       display: flex;
       align-items: center;
 
+      p {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        line-height: 40px;
+      }
+
       img {
         border-radius: 50%;
         margin-right: 5px;

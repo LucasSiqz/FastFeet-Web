@@ -38,10 +38,14 @@ export default function DeliverymenItem({ deliveryman }) {
         </div>
       </td>
       <td>
-        <div>{deliveryman.name}</div>
+        <div>
+          <p>{deliveryman.name}</p>
+        </div>
       </td>
       <td>
-        <div>{deliveryman.email}</div>
+        <div>
+          <p>{deliveryman.email}</p>
+        </div>
       </td>
       <td>
         <LastItem>

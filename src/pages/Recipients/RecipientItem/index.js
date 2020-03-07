@@ -27,10 +27,16 @@ export default function RecipientItem({ recipient }) {
         <FirstItem>#{recipient.id}</FirstItem>
       </td>
       <td>
-        <div>{recipient.recipient_name}</div>
+        <div>
+          <p>{recipient.recipient_name}</p>
+        </div>
       </td>
       <td>
-        <div>{`${recipient.street}, ${recipient.number}, ${recipient.city} - ${recipient.state}`}</div>
+        <div>
+          <p>
+            {`${recipient.street}, ${recipient.number}, ${recipient.city} - ${recipient.state}`}
+          </p>
+        </div>
       </td>
       <td>
         <LastItem>

@@ -70,7 +70,9 @@ export default function OrderItem({ order }) {
         <FirstItem>#{order.id}</FirstItem>
       </td>
       <td>
-        <div>{order.recipient.recipient_name}</div>
+        <div>
+          <p>{order.recipient.recipient_name}</p>
+        </div>
       </td>
       <td>
         <div>
@@ -83,14 +85,18 @@ export default function OrderItem({ order }) {
             <DefaultAvatar name={order.deliveryman.name} size={35} />
           )}
 
-          {order.deliveryman.name}
+          <p>{order.deliveryman.name}</p>
         </div>
       </td>
       <td>
-        <div>{order.recipient.city}</div>
+        <div>
+          <p>{order.recipient.city}</p>
+        </div>
       </td>
       <td>
-        <div>{order.recipient.state}</div>
+        <div>
+          <p>{order.recipient.state}</p>
+        </div>
       </td>
       <td>
         <div>

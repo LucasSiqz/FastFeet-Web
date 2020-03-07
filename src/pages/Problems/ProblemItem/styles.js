@@ -15,6 +15,13 @@ export const Container = styled.tr`
       color: #666666;
       display: flex;
       align-items: center;
+
+      p {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        line-height: 40px;
+      }
     }
   }
 `;
