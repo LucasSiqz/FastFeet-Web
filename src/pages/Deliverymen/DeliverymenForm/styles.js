@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
+  flex-direction: column;
   margin-top: 27px;
   margin-left: 270px;
   margin-right: 270px;
@@ -24,4 +25,25 @@ export const Buttons = styled.div`
   button {
     margin-left: 16px;
   }
+`;
+
+export const FormContainer = styled.div`
+  display: flex;
+  margin-top: 27px;
+  justify-content: center;
+  background: #fff;
+  border-radius: 4px;
+
+  form {
+    flex: 1;
+    margin-left: 31px;
+    margin-right: 31px;
+    margin-bottom: 40px;
+  }
+`;
+
+export const AvatarContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
 `;
