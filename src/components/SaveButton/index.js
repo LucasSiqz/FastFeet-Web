@@ -7,7 +7,7 @@ import { Container } from './styles';
 export default function SaveButton({ onClick, ...rest }) {
   return (
     <Container>
-      <button type="button" onClick={() => onClick()} {...rest}>
+      <button type="submit" onClick={() => onClick()} {...rest}>
         <MdCheck color="#fff" size={22} />
         <strong>SALVAR</strong>
       </button>
