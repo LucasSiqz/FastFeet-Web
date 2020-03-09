@@ -41,14 +41,14 @@ export const FormContainer = styled.div`
     margin-top: 26px;
     padding-left: 16px;
 
-    div {
-      display: flex;
-    }
-
     span {
       display: flex;
       margin-top: 16px;
       margin-right: 30px;
+    }
+
+    aside {
+      display: flex;
     }
   }
 `;

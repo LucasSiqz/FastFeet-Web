@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import Select from 'react-select/async';
 import { useField } from '@unform/core';
+import PropTypes from 'prop-types';
 
 import { Container, Label } from './styles';
 
@@ -40,3 +41,12 @@ const AsyncSelect = ({ name, label, ...rest }) => {
   );
 };
 export default AsyncSelect;
+
+AsyncSelect.propTypes = {
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string,
+};
+
+AsyncSelect.defaultProps = {
+  label: '',
+};

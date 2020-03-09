@@ -138,7 +138,7 @@ export default function OrderForm({ match }) {
       </InitialContent>
       <FormContainer>
         <Form ref={ref} initialData={orderData} onSubmit={handleSubmmit}>
-          <div>
+          <aside>
             <AsyncSelectInput
               type="text"
               label="Destinatário"
@@ -157,7 +157,7 @@ export default function OrderForm({ match }) {
               loadOptions={loadDeliverymen}
               styles={customStylesSelectInput}
             />
-          </div>
+          </aside>
           <span>
             <Input
               name="product"
