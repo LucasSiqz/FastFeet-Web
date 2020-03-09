@@ -52,5 +52,9 @@ export const FormContainer = styled.div`
     div {
       display: flex;
     }
+
+    span {
+      width: 60%;
+    }
   }
 `;

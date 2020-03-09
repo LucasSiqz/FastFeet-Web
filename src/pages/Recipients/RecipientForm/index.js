@@ -146,14 +146,14 @@ export default function RecipientForm({ match }) {
             placeholder="Ludwig van Beethoven"
           />
           <div>
-            <div>
+            <span>
               <Input
                 name="street"
                 type="text"
                 label="Rua"
                 placeholder="Rua Beethoven"
               />
-            </div>
+            </span>
             <Input
               name="number"
               type="text"
