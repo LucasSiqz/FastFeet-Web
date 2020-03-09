@@ -37,24 +37,18 @@ export const FormContainer = styled.div`
   form {
     flex: 1;
     margin-left: 15px;
-    margin-right: 31px;
     margin-bottom: 37px;
     margin-top: 26px;
-
-    input {
-      margin-left: 16px;
-    }
-
-    strong {
-      margin-left: 16px;
-    }
+    padding-left: 16px;
 
     div {
       display: flex;
     }
 
     span {
-      width: 60%;
+      display: flex;
+      margin-top: 16px;
+      margin-right: 30px;
     }
   }
 `;

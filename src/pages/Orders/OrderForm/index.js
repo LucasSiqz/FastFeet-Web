@@ -10,6 +10,7 @@ import api from '~/services/api';
 import SaveButton from '~/components/SaveButton';
 import BackButton from '~/components/BackButton';
 import Input from '~/components/Input';
+import AsyncSelectInput from '~/components/AsyncSelectInput';
 
 import { Container, InitialContent, Buttons, FormContainer } from './styles';
 
@@ -29,6 +30,36 @@ export default function OrderForm({ match }) {
       loadInitialData();
     }
   }, [id]);
+
+  const customStylesSelectInput = {
+    control: provided => ({
+      ...provided,
+      height: 45,
+      width: '100%',
+    }),
+  };
+
+  async function loadRecipients(inputValue, callback) {
+    const response = await api.get('/recipients');
+
+    const data = response.data.map(recipient => ({
+      value: recipient.id,
+      label: recipient.recipient_name,
+    }));
+
+    callback(data);
+  }
+
+  async function loadDeliverymen(inputValue, callback) {
+    const response = await api.get('/deliverymans');
+
+    const data = response.data.map(deliveryman => ({
+      value: deliveryman.id,
+      label: deliveryman.name,
+    }));
+
+    callback(data);
+  }
 
   async function createNewOrder(data) {
     try {
@@ -50,7 +81,7 @@ export default function OrderForm({ match }) {
         product,
       });
 
-      toast.success('Encomenda cadastrado com sucesso!');
+      toast.success('Encomenda cadastrada com sucesso!');
       history.push('/orders');
     } catch (err) {
       toast.error('Erro ao cadastrar encomenda, Verifique os dados!');
@@ -108,28 +139,36 @@ export default function OrderForm({ match }) {
       <FormContainer>
         <Form ref={ref} initialData={orderData} onSubmit={handleSubmmit}>
           <div>
-            <Input
-              name="recipient_id"
+            <AsyncSelectInput
               type="text"
-              label="Destinátario"
+              label="Destinatário"
+              name="recipient_id"
               placeholder="Ludwig van Beethoven"
+              noOptionsMessage={() => 'Nenhum destinatário encontrado'}
+              loadOptions={loadRecipients}
+              styles={customStylesSelectInput}
             />
-            <Input
-              name="deliveryman_id"
+            <AsyncSelectInput
               type="text"
               label="Entregador"
+              name="deliveryman_id"
               placeholder="John Doe"
+              noOptionsMessage={() => 'Nenhum entregador encontrado'}
+              loadOptions={loadDeliverymen}
+              styles={customStylesSelectInput}
             />
           </div>
-          <Input
-            name="product"
-            type="text"
-            label="Nome do produto"
-            placeholder="Yamaha SX7"
-            onKeyPress={e =>
-              e.key === 'Enter' ? ref.current.submitForm() : null
-            }
-          />
+          <span>
+            <Input
+              name="product"
+              type="text"
+              label="Nome do produto"
+              placeholder="Yamaha SX7"
+              onKeyPress={e =>
+                e.key === 'Enter' ? ref.current.submitForm() : null
+              }
+            />
+          </span>
         </Form>
       </FormContainer>
     </Container>
