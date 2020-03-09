@@ -7,6 +7,7 @@ import {
   MdRemoveRedEye,
 } from 'react-icons/md';
 
+import history from '~/services/history';
 import DefaultAvatar from '~/components/DefaultAvatar';
 
 import {
@@ -120,7 +121,11 @@ export default function OrderItem({ order }) {
                 </Button>
               </Option>
               <Option>
-                <Button onClick={() => {}}>
+                <Button
+                  onClick={() => {
+                    history.push(`/orders/edit/${order.id}`);
+                  }}
+                >
                   <MdEdit color="#4D85EE" size={16} />
                   <p>Editar</p>
                 </Button>

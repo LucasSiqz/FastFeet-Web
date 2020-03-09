@@ -36,7 +36,7 @@ export default function Orders() {
         <strong>Gerenciando encomendas</strong>
         <aside>
           <SearchInput onChange={onChange} placeholder="encomendas" />
-          <AddButton onClick={() => history.push('/')} />
+          <AddButton onClick={() => history.push('/orders/new')} />
         </aside>
       </InitialContent>
       <OrdersList>

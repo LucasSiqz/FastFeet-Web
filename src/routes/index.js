@@ -5,16 +5,19 @@ import Route from './Route';
 import SignIn from '~/pages/SignIn';
 import Orders from '~/pages/Orders';
 import Recipients from '~/pages/Recipients';
+import RecipientForm from '~/pages/Recipients/RecipientForm';
 import Deliverymen from '~/pages/Deliverymen';
 import DeliverymenForm from '~/pages/Deliverymen/DeliverymenForm';
+import OrderForm from '~/pages/Orders/OrderForm';
 import Problems from '~/pages/Problems';
-import RecipientForm from '~/pages/Recipients/RecipientForm';
 
 export default function Routes() {
   return (
     <Switch>
       <Route path="/" exact component={SignIn} />
 
+      <Route path="/orders/edit/:id" component={OrderForm} isPrivate />
+      <Route path="/orders/new" component={OrderForm} isPrivate />
       <Route path="/orders" component={Orders} isPrivate />
 
       <Route
