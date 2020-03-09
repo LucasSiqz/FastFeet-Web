@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 import {
   MdMoreHoriz,
@@ -6,6 +7,7 @@ import {
   MdDeleteForever,
   MdRemoveRedEye,
 } from 'react-icons/md';
+import { parseISO, format } from 'date-fns';
 
 import history from '~/services/history';
 import DefaultAvatar from '~/components/DefaultAvatar';
@@ -24,7 +26,9 @@ import {
 
 export default function OrderItem({ order }) {
   const [visible, setVisible] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [status, setStatus] = useState({});
+  const [formatedDates, setFormatedDates] = useState({});
 
   useEffect(() => {
     function defineStatus() {
@@ -58,7 +62,18 @@ export default function OrderItem({ order }) {
       });
     }
 
+    function formatDates() {
+      const start_date = order.start_date
+        ? format(parseISO(order.start_date), 'dd/MM/yyyy')
+        : 'Produto não foi retirado';
+      const end_date = order.end_date
+        ? format(parseISO(order.end_date), 'dd/MM/yyyy')
+        : 'Produto não foi entregue ';
+      return setFormatedDates({ start_date, end_date });
+    }
+
     defineStatus();
+    formatDates();
   }, [order]);
 
   function handleToggleVisible() {
@@ -115,10 +130,65 @@ export default function OrderItem({ order }) {
             </Badge>
             <OptionsList visible={visible}>
               <Option>
-                <Button onClick={() => {}}>
+                <Button
+                  onClick={() => {
+                    handleToggleVisible();
+                    setModalOpen(true);
+                  }}
+                >
                   <MdRemoveRedEye color="#8E5BE8" size={16} />
                   <p>Visualizar</p>
                 </Button>
+
+                <Modal
+                  isOpen={modalOpen}
+                  onRequestClose={() => {
+                    setModalOpen(false);
+                  }}
+                  ariaHideApp={false}
+                  shouldCloseOnOverlayClick
+                  shouldCloseOnEsc
+                  shouldReturnFocusAfterClose
+                  style={{
+                    overlay: {
+                      background: 'Rgba(0,0,0,0.7)',
+                    },
+                    content: {
+                      background: '#fff',
+                      width: 450,
+                      top: '50%',
+                      left: '50%',
+                      right: 'auto',
+                      bottom: 'auto',
+                      marginRight: '-50%',
+                      transform: 'translate(-50%, -50%)',
+                    },
+                  }}
+                >
+                  <div>
+                    <strong>Informações da encomenda</strong>
+                    <p>
+                      {order.recipient.street}, {order.recipient.number}
+                    </p>
+                    <p>
+                      {order.recipient.city} - {order.recipient.state}
+                    </p>
+                    <p>{order.recipient.cep}</p>
+                  </div>
+                  <div>
+                    <strong>Datas</strong>
+                    <strong>Retirada:</strong>
+                    <span>{formatedDates.start_date}</span>
+                    <strong>Entrega:</strong>
+                    <span>{formatedDates.end_date}</span>
+                  </div>
+                  <strong>Assinatura do destinatário </strong>
+                  {order.signature_id ? (
+                    <img src={order.signature.url} alt="assinatura" />
+                  ) : (
+                    <p>Não possui assinatura</p>
+                  )}
+                </Modal>
               </Option>
               <Option>
                 <Button
