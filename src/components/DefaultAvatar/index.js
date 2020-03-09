@@ -39,7 +39,7 @@ export default function DefaultAvatar({ name, size }) {
     <Container
       color={colors[randomColor].color}
       background={colors[randomColor].background}
-      size={`${size}px`}
+      size={size}
     >
       {Initials[1] ? `${Initials[0][0]}${Initials[1][0]}` : Initials[0][0]}
     </Container>

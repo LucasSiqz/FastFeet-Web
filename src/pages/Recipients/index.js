@@ -43,7 +43,7 @@ export default function Recipients() {
         <strong>Gerenciando destinatários</strong>
         <aside>
           <SearchInput onChange={onChange} placeholder="destinatários" />
-          <AddButton onClick={() => history.push('/')} />
+          <AddButton onClick={() => history.push('/recipients/new')} />
         </aside>
       </InitialContent>
       <RecipientsList>

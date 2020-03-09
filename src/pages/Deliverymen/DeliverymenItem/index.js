@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { MdMoreHoriz, MdEdit, MdDeleteForever } from 'react-icons/md';
 
+import history from '~/services/history';
+
 import DefaultAvatar from '~/components/DefaultAvatar';
 
 import {
@@ -55,7 +57,11 @@ export default function DeliverymenItem({ deliveryman }) {
             </Badge>
             <OptionsList visible={visible}>
               <Option>
-                <Button onClick={() => {}}>
+                <Button
+                  onClick={() => {
+                    history.push(`/deliverymen/edit/${deliveryman.id}`);
+                  }}
+                >
                   <MdEdit color="#4D85EE" size={16} />
                   <p>Editar</p>
                 </Button>

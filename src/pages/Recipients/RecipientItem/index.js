@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { MdMoreHoriz, MdEdit, MdDeleteForever } from 'react-icons/md';
 
+import history from '~/services/history';
+
 import {
   Container,
   FirstItem,
@@ -46,7 +48,11 @@ export default function RecipientItem({ recipient }) {
             </Badge>
             <OptionsList visible={visible}>
               <Option>
-                <Button onClick={() => {}}>
+                <Button
+                  onClick={() => {
+                    history.push(`/recipients/edit/${recipient.id}`);
+                  }}
+                >
                   <MdEdit color="#4D85EE" size={16} />
                   <p>Editar</p>
                 </Button>

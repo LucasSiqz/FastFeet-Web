@@ -1,7 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 
 import history from '~/services/history';
 import api from '~/services/api';
@@ -19,10 +20,24 @@ import {
   AvatarContainer,
 } from './styles';
 
-export default function DeliverymenForm() {
+export default function DeliverymenForm({ match }) {
+  const { id } = match.params;
+  const [deliverymanData, setDeliverymanData] = useState({});
   const ref = useRef(null);
 
-  async function handleSubmmit(data) {
+  useEffect(() => {
+    async function loadInitialData() {
+      const response = await api.get(`deliverymans/${id}`);
+      const { data } = response;
+
+      setDeliverymanData(data);
+    }
+    if (id) {
+      loadInitialData();
+    }
+  }, [id]);
+
+  async function createNewDeliveryman(data) {
     try {
       const schema = Yup.object().shape({
         avatar: Yup.number(),
@@ -47,19 +62,56 @@ export default function DeliverymenForm() {
     }
   }
 
+  async function editDeliveryman(data) {
+    try {
+      const schema = Yup.object().shape({
+        avatar: Yup.number(),
+        name: Yup.string().required(),
+        email: Yup.string()
+          .email()
+          .required(),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      const { name, email, avatar_id } = data;
+
+      await api.put(`deliverymans/${id}`, { name, email, avatar_id });
+
+      toast.success('Entregador editado com sucesso!');
+      history.push('/deliverymen');
+    } catch (err) {
+      toast.error('Erro ao editar entregador, Verifique os dados!');
+    }
+  }
+
+  function handleSubmmit(data) {
+    if (id) {
+      editDeliveryman(data);
+    } else {
+      createNewDeliveryman(data);
+    }
+  }
+
   return (
     <Container>
       <InitialContent>
-        <strong>Cadastro de entregadores</strong>
+        {id ? (
+          <strong>Edição de entregadores</strong>
+        ) : (
+          <strong>Cadastro de entregadores</strong>
+        )}
         <Buttons>
           <BackButton />
           <SaveButton onClick={() => ref.current.submitForm()} />
         </Buttons>
       </InitialContent>
       <FormContainer>
-        <Form ref={ref} onSubmit={handleSubmmit}>
+        <Form ref={ref} initialData={deliverymanData} onSubmit={handleSubmmit}>
           <AvatarContainer>
-            <AvatarInput />
+            <AvatarInput name="avatar_id" />
           </AvatarContainer>
           <Input name="name" type="text" label="Nome" placeholder="John Doe" />
           <Input
@@ -76,3 +128,11 @@ export default function DeliverymenForm() {
     </Container>
   );
 }
+
+DeliverymenForm.propTypes = {
+  match: PropTypes.object,
+};
+
+DeliverymenForm.defaultProps = {
+  match: null,
+};

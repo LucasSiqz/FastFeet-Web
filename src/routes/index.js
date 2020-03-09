@@ -8,6 +8,7 @@ import Recipients from '~/pages/Recipients';
 import Deliverymen from '~/pages/Deliverymen';
 import DeliverymenForm from '~/pages/Deliverymen/DeliverymenForm';
 import Problems from '~/pages/Problems';
+import RecipientForm from '~/pages/Recipients/RecipientForm';
 
 export default function Routes() {
   return (
@@ -16,9 +17,16 @@ export default function Routes() {
 
       <Route path="/orders" component={Orders} isPrivate />
 
+      <Route
+        path="/deliverymen/edit/:id"
+        component={DeliverymenForm}
+        isPrivate
+      />
       <Route path="/deliverymen/new" component={DeliverymenForm} isPrivate />
       <Route path="/deliverymen" component={Deliverymen} isPrivate />
 
+      <Route path="/recipients/edit/:id" component={RecipientForm} isPrivate />
+      <Route path="/recipients/new" component={RecipientForm} isPrivate />
       <Route path="/recipients" component={Recipients} isPrivate />
 
       <Route path="/problems" component={Problems} isPrivate />
