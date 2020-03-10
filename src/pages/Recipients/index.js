@@ -28,6 +28,13 @@ export default function Recipients() {
     loadRecipients();
   }, []);
 
+  async function updateRecipients() {
+    const response = await api.get('recipients');
+    const { data } = response;
+
+    setRecipients(data);
+  }
+
   async function onChange(event) {
     const response = await api.get(
       `recipients?recipient=${event.target.value}`
@@ -57,7 +64,11 @@ export default function Recipients() {
         </thead>
         <tbody>
           {recipients.map(recipient => (
-            <RecipientItem key={recipient.id} recipient={recipient} />
+            <RecipientItem
+              key={recipient.id}
+              recipient={recipient}
+              updateRecipients={updateRecipients}
+            />
           ))}
         </tbody>
       </RecipientsList>

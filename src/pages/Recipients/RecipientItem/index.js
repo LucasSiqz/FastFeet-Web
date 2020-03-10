@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { MdMoreHoriz, MdEdit, MdDeleteForever } from 'react-icons/md';
+import { toast } from 'react-toastify';
 
+import api from '~/services/api';
 import history from '~/services/history';
 
 import {
@@ -16,11 +18,27 @@ import {
   OptionsContainer,
 } from './styles';
 
-export default function RecipientItem({ recipient }) {
+export default function RecipientItem({ recipient, updateRecipients }) {
   const [visible, setVisible] = useState(false);
 
   function handleToggleVisible() {
     setVisible(!visible);
+  }
+
+  async function handleDelete() {
+    const confirm = window.confirm('Você tem certeza que deseja excluir?');
+
+    if (!confirm) {
+      return;
+    }
+
+    try {
+      await api.delete(`/recipients/${recipient.id}`);
+      updateRecipients();
+      toast.success('Destinatário excluido com sucesso!');
+    } catch (err) {
+      toast.error('Erro ao excluir destinatário!');
+    }
   }
 
   return (
@@ -58,7 +76,12 @@ export default function RecipientItem({ recipient }) {
                 </Button>
               </Option>
               <LastOption>
-                <Button onClick={() => {}}>
+                <Button
+                  onClick={() => {
+                    handleToggleVisible();
+                    handleDelete();
+                  }}
+                >
                   <MdDeleteForever color="#DE3B3B" size={16} />
                   <p>Excluir</p>
                 </Button>
@@ -73,4 +96,5 @@ export default function RecipientItem({ recipient }) {
 
 RecipientItem.propTypes = {
   recipient: PropTypes.object.isRequired,
+  updateRecipients: PropTypes.func.isRequired,
 };
