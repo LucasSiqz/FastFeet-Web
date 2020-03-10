@@ -8,10 +8,10 @@ import {
   MdRemoveRedEye,
 } from 'react-icons/md';
 import { parseISO, format } from 'date-fns';
-
 import { toast } from 'react-toastify';
-import history from '~/services/history';
+
 import api from '~/services/api';
+import history from '~/services/history';
 import DefaultAvatar from '~/components/DefaultAvatar';
 
 import {
@@ -86,7 +86,8 @@ export default function OrderItem({ order, updateOrders }) {
   }
 
   async function handleDelete() {
-    const confirm = window.confirm('Você tem certeza que deseja deletar isso?');
+    // eslint-disable-next-line no-alert
+    const confirm = window.confirm('Você tem certeza que deseja excluir?');
 
     if (!confirm) {
       return;

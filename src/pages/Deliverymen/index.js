@@ -28,6 +28,13 @@ export default function Deliverymen() {
     loadDeliverymen();
   }, []);
 
+  async function updateDeliverymen() {
+    const response = await api.get('deliverymans');
+    const { data } = response;
+
+    setDeliverymen(data);
+  }
+
   async function onChange(event) {
     const response = await api.get(`deliverymans?name=${event.target.value}`);
     const { data } = response;
@@ -56,7 +63,11 @@ export default function Deliverymen() {
         </thead>
         <tbody>
           {deliverymen.map(deliveryman => (
-            <DeliverymenItem key={deliveryman.id} deliveryman={deliveryman} />
+            <DeliverymenItem
+              key={deliveryman.id}
+              deliveryman={deliveryman}
+              updateDeliverymen={updateDeliverymen}
+            />
           ))}
         </tbody>
       </DeliverymenList>

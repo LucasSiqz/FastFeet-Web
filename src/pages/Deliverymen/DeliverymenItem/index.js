@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { MdMoreHoriz, MdEdit, MdDeleteForever } from 'react-icons/md';
+import { toast } from 'react-toastify';
 
+import api from '~/services/api';
 import history from '~/services/history';
 
 import DefaultAvatar from '~/components/DefaultAvatar';
@@ -18,11 +20,28 @@ import {
   OptionsContainer,
 } from './styles';
 
-export default function DeliverymenItem({ deliveryman }) {
+export default function DeliverymenItem({ deliveryman, updateDeliverymen }) {
   const [visible, setVisible] = useState(false);
 
   function handleToggleVisible() {
     setVisible(!visible);
+  }
+
+  async function handleDelete() {
+    // eslint-disable-next-line no-alert
+    const confirm = window.confirm('Você tem certeza que deseja excluir?');
+
+    if (!confirm) {
+      return;
+    }
+
+    try {
+      await api.delete(`/deliverymans/${deliveryman.id}`);
+      updateDeliverymen();
+      toast.success('Entregador excluido com sucesso!');
+    } catch (err) {
+      toast.error('Erro ao excluir entregador!');
+    }
   }
 
   return (
@@ -67,7 +86,12 @@ export default function DeliverymenItem({ deliveryman }) {
                 </Button>
               </Option>
               <LastOption>
-                <Button onClick={() => {}}>
+                <Button
+                  onClick={() => {
+                    handleDelete();
+                    handleToggleVisible();
+                  }}
+                >
                   <MdDeleteForever color="#DE3B3B" size={16} />
                   <p>Excluir</p>
                 </Button>
@@ -82,4 +106,5 @@ export default function DeliverymenItem({ deliveryman }) {
 
 DeliverymenItem.propTypes = {
   deliveryman: PropTypes.object.isRequired,
+  updateDeliverymen: PropTypes.func.isRequired,
 };
