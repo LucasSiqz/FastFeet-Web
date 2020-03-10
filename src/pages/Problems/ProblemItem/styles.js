@@ -135,3 +135,21 @@ export const LastOption = styled.span`
 export const OptionsContainer = styled.span`
   position: relative;
 `;
+
+export const ModalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  strong {
+    font-size: 14px;
+    color: #444444;
+  }
+
+  span {
+    display: flex;
+    text-align: justify;
+    margin-top: 4px;
+    font-size: 16px;
+    color: #666666;
+  }
+`;
