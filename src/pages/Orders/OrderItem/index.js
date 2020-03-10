@@ -22,6 +22,9 @@ import {
   LastOption,
   Button,
   OptionsContainer,
+  ModalContainer,
+  ImageContainer,
+  Title,
 } from './styles';
 
 export default function OrderItem({ order }) {
@@ -165,29 +168,40 @@ export default function OrderItem({ order }) {
                     },
                   }}
                 >
-                  <div>
-                    <strong>Informações da encomenda</strong>
-                    <p>
-                      {order.recipient.street}, {order.recipient.number}
-                    </p>
-                    <p>
-                      {order.recipient.city} - {order.recipient.state}
-                    </p>
-                    <p>{order.recipient.cep}</p>
-                  </div>
-                  <div>
-                    <strong>Datas</strong>
-                    <strong>Retirada:</strong>
-                    <span>{formatedDates.start_date}</span>
-                    <strong>Entrega:</strong>
-                    <span>{formatedDates.end_date}</span>
-                  </div>
-                  <strong>Assinatura do destinatário </strong>
-                  {order.signature_id ? (
-                    <img src={order.signature.url} alt="assinatura" />
-                  ) : (
-                    <p>Não possui assinatura</p>
-                  )}
+                  <ModalContainer>
+                    <div>
+                      <Title>Informações da encomenda</Title>
+                      <span>
+                        {order.recipient.street}, {order.recipient.number}
+                      </span>
+                      <span>
+                        {order.recipient.city} - {order.recipient.state}
+                      </span>
+                      <span>{order.recipient.cep}</span>
+                    </div>
+                    <aside>
+                      <Title>Datas</Title>
+                      <div>
+                        <strong>Retirada: </strong>
+                        <span>{formatedDates.start_date}</span>
+                      </div>
+                      <div>
+                        <strong>Entrega: </strong>
+                        <span>{formatedDates.end_date}</span>
+                      </div>
+                    </aside>
+                    <Title>Assinatura do destinatário </Title>
+                    <div>
+                      <ImageContainer>
+                        <br />
+                        {order.signature_id ? (
+                          <img src={order.signature.url} alt="assinatura" />
+                        ) : (
+                          <span>Não possui assinatura</span>
+                        )}
+                      </ImageContainer>
+                    </div>
+                  </ModalContainer>
                 </Modal>
               </Option>
               <Option>

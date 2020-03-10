@@ -166,3 +166,53 @@ export const LastOption = styled.span`
 export const OptionsContainer = styled.span`
   position: relative;
 `;
+
+export const ModalContainer = styled.div`
+  flex: 1;
+
+  strong {
+    color: #444444;
+    font-size: 16px;
+    line-height: 25px;
+  }
+
+  aside {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  div:first-child {
+    display: flex;
+    flex-direction: column;
+  }
+
+  span {
+    color: #666666;
+    font-size: 16px;
+    margin-bottom: 4px;
+    margin-top: 4px;
+  }
+
+  img {
+    max-width: 234px;
+    height: 36px;
+  }
+`;
+
+export const ImageContainer = styled.div`
+  display: flex;
+  align-items: center;
+  align-content: center;
+`;
+
+export const Title = styled.strong`
+  margin-bottom: 4px;
+  color: #444444;
+  font-size: 16px;
+`;
