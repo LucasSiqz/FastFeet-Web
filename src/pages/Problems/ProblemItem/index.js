@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
-
 import { MdMoreHoriz, MdRemoveRedEye, MdDeleteForever } from 'react-icons/md';
+import { toast } from 'react-toastify';
+
+import api from '~/services/api';
 
 import {
   Container,
@@ -17,12 +19,28 @@ import {
   ModalContainer,
 } from './styles';
 
-export default function ProblemItem({ problem }) {
+export default function ProblemItem({ problem, updateProblems }) {
   const [visible, setVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
   function handleToggleVisible() {
     setVisible(!visible);
+  }
+
+  async function handleCancel() {
+    const confirm = window.confirm('Você tem certeza que deseja excluir?');
+
+    if (!confirm) {
+      return;
+    }
+
+    try {
+      await api.delete(`problem/${problem.id}/cancel-delivery`);
+      updateProblems();
+      toast.success('Entrega cancelada com sucesso!');
+    } catch (err) {
+      toast.error('Erro ao cancelar entrega, verifque os status da encomenda!');
+    }
   }
 
   return (
@@ -84,7 +102,12 @@ export default function ProblemItem({ problem }) {
                 </Modal>
               </Option>
               <LastOption>
-                <Button onClick={() => {}}>
+                <Button
+                  onClick={() => {
+                    handleToggleVisible();
+                    handleCancel();
+                  }}
+                >
                   <MdDeleteForever color="#DE3B3B" size={16} />
                   <p>Cancelar encomenda</p>
                 </Button>
@@ -99,4 +122,5 @@ export default function ProblemItem({ problem }) {
 
 ProblemItem.propTypes = {
   problem: PropTypes.object.isRequired,
+  updateProblems: PropTypes.func.isRequired,
 };

@@ -20,6 +20,13 @@ export default function Problems() {
     loadProblems();
   }, []);
 
+  async function updateProblems() {
+    const response = await api.get('/deliveries/with-problems');
+    const { data } = response;
+
+    setProblems(data);
+  }
+
   return (
     <Container>
       <InitialContent>
@@ -35,7 +42,11 @@ export default function Problems() {
         </thead>
         <tbody>
           {problems.map(problem => (
-            <ProblemItem key={problem.id} problem={problem} />
+            <ProblemItem
+              key={problem.id}
+              problem={problem}
+              updateProblems={updateProblems}
+            />
           ))}
         </tbody>
       </ProblemList>
