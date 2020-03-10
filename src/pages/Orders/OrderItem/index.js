@@ -9,7 +9,9 @@ import {
 } from 'react-icons/md';
 import { parseISO, format } from 'date-fns';
 
+import { toast } from 'react-toastify';
 import history from '~/services/history';
+import api from '~/services/api';
 import DefaultAvatar from '~/components/DefaultAvatar';
 
 import {
@@ -27,7 +29,7 @@ import {
   Title,
 } from './styles';
 
-export default function OrderItem({ order }) {
+export default function OrderItem({ order, updateOrders }) {
   const [visible, setVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [status, setStatus] = useState({});
@@ -81,6 +83,22 @@ export default function OrderItem({ order }) {
 
   function handleToggleVisible() {
     setVisible(!visible);
+  }
+
+  async function handleDelete() {
+    const confirm = window.confirm('Você tem certeza que deseja deletar isso?');
+
+    if (!confirm) {
+      return;
+    }
+
+    try {
+      await api.delete(`/orders/${order.id}`);
+      updateOrders();
+      toast.success('Encomenda excluida com sucesso!');
+    } catch (err) {
+      toast.error('Erro ao excluir encomenda!');
+    }
   }
 
   return (
@@ -215,7 +233,12 @@ export default function OrderItem({ order }) {
                 </Button>
               </Option>
               <LastOption>
-                <Button onClick={() => {}}>
+                <Button
+                  onClick={() => {
+                    handleToggleVisible();
+                    handleDelete();
+                  }}
+                >
                   <MdDeleteForever color="#DE3B3B" size={16} />
                   <p>Excluir</p>
                 </Button>
@@ -229,5 +252,6 @@ export default function OrderItem({ order }) {
 }
 
 OrderItem.propTypes = {
+  updateOrders: PropTypes.func.isRequired,
   order: PropTypes.object.isRequired,
 };

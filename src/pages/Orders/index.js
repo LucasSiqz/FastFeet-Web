@@ -23,6 +23,13 @@ export default function Orders() {
     loadOrders();
   }, []);
 
+  async function updateOrders() {
+    const response = await api.get('orders');
+    const { data } = response;
+
+    setOrders(data);
+  }
+
   async function onChange(event) {
     const response = await api.get(`orders?product=${event.target.value}`);
     const { data } = response;
@@ -53,7 +60,11 @@ export default function Orders() {
         </thead>
         <tbody>
           {orders.map(order => (
-            <OrderItem key={order.id} order={order} />
+            <OrderItem
+              key={order.id}
+              order={order}
+              updateOrders={updateOrders}
+            />
           ))}
         </tbody>
       </OrdersList>
