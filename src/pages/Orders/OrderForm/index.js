@@ -17,6 +17,8 @@ import { Container, InitialContent, Buttons, FormContainer } from './styles';
 export default function OrderForm({ match }) {
   const { id } = match.params;
   const [orderData, setOrderData] = useState({});
+  const [deliverymen, setDeliverymen] = useState([]);
+  const [recipients, setRecipients] = useState([]);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -26,9 +28,32 @@ export default function OrderForm({ match }) {
 
       setOrderData(data);
     }
+
+    async function loadDeliverymen() {
+      const response = await api.get('/deliverymans');
+
+      const data = response.data.map(deliveryman => ({
+        value: deliveryman.id,
+        label: deliveryman.name,
+      }));
+
+      setDeliverymen(data);
+    }
+    async function loadRecipients() {
+      const response = await api.get('/recipients');
+
+      const data = response.data.map(recipient => ({
+        value: recipient.id,
+        label: recipient.recipient_name,
+      }));
+
+      setRecipients(data);
+    }
     if (id) {
       loadInitialData();
     }
+    loadRecipients();
+    loadDeliverymen();
   }, [id]);
 
   const customStylesSelectInput = {
@@ -39,27 +64,31 @@ export default function OrderForm({ match }) {
     }),
   };
 
-  async function loadRecipients(inputValue, callback) {
-    const response = await api.get('/recipients');
-
-    const data = response.data.map(recipient => ({
-      value: recipient.id,
-      label: recipient.recipient_name,
-    }));
-
-    callback(data);
+  async function filterDeliverymen(inputValue) {
+    return deliverymen.filter(i =>
+      i.label.toLowerCase().includes(inputValue.toLowerCase())
+    );
   }
 
-  async function loadDeliverymen(inputValue, callback) {
-    const response = await api.get('/deliverymans');
-
-    const data = response.data.map(deliveryman => ({
-      value: deliveryman.id,
-      label: deliveryman.name,
-    }));
-
-    callback(data);
+  async function filterRecipients(inputValue) {
+    return recipients.filter(i =>
+      i.label.toLowerCase().includes(inputValue.toLowerCase())
+    );
   }
+
+  const deliverymenOptions = inputValue =>
+    new Promise(resolve => {
+      setTimeout(() => {
+        resolve(filterDeliverymen(inputValue));
+      }, 1000);
+    });
+
+  const recipientsOptions = inputValue =>
+    new Promise(resolve => {
+      setTimeout(() => {
+        resolve(filterRecipients(inputValue));
+      }, 1000);
+    });
 
   async function createNewOrder(data) {
     try {
@@ -145,7 +174,7 @@ export default function OrderForm({ match }) {
               name="recipient_id"
               placeholder="Ludwig van Beethoven"
               noOptionsMessage={() => 'Nenhum destinatário encontrado'}
-              loadOptions={loadRecipients}
+              loadOptions={recipientsOptions}
               styles={customStylesSelectInput}
             />
             <AsyncSelectInput
@@ -154,7 +183,7 @@ export default function OrderForm({ match }) {
               name="deliveryman_id"
               placeholder="John Doe"
               noOptionsMessage={() => 'Nenhum entregador encontrado'}
-              loadOptions={loadDeliverymen}
+              loadOptions={deliverymenOptions}
               styles={customStylesSelectInput}
             />
           </aside>
