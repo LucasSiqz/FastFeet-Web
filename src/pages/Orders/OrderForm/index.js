@@ -39,6 +39,7 @@ export default function OrderForm({ match }) {
 
       setDeliverymen(data);
     }
+
     async function loadRecipients() {
       const response = await api.get('/recipients');
 
@@ -49,9 +50,11 @@ export default function OrderForm({ match }) {
 
       setRecipients(data);
     }
+
     if (id) {
       loadInitialData();
     }
+
     loadRecipients();
     loadDeliverymen();
   }, [id]);
