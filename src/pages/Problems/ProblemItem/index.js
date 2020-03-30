@@ -46,7 +46,7 @@ export default function ProblemItem({ problem, updateProblems }) {
   return (
     <Container>
       <td>
-        <FirstItem>#{problem.id}</FirstItem>
+        <FirstItem>#{problem.delivery_id}</FirstItem>
       </td>
       <td>
         <div>
