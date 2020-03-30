@@ -33,7 +33,7 @@ Acesse a pasta:
 
 > \$ cd FastFeet-Web
 
-- Its necessary to have yarn package installed
+- É necessário ter yarn instalado
 
 Instale as dependências:
 
