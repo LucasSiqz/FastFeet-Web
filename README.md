@@ -14,32 +14,32 @@ Esse repositório é referente a aplicação web do FastFeet desenvolvido em rea
 ---
 
 <div align="center">
-  <img alt="FastfeetPart1" title="FastfeetPart1" src="" />
+  <img alt="FastfeetPart1" title="FastfeetPart1" src="https://github.com/LucasSiqz/FastFeet-Web/blob/master/screen_shots/fastfeet-parte1.png" />
   <br/>
-  <img alt="FastfeetPart2" title="FastfeetPart2" src="" />
+  <img alt="FastfeetPart2" title="FastfeetPart2" src="https://github.com/LucasSiqz/FastFeet-Web/blob/master/screen_shots/fastfeet-part2.png" />
 </div>
 
 ---
 
-## Getting start
+## Como executar o projeto
 
-- Its necessary to run [server](https://github.com/LucasSiqz/FastFeet-Backend) in port 3333.
+- É necessário que o [servidor](https://github.com/LucasSiqz/FastFeet-Backend) esteja rodando na porta 3333.
 
-Clone this repository:
+Clone o repositorio:
 
 > \$ git clone https://github.com/LucasSiqz/FastFeet-Web.git
 
-Go into the repository:
+Acesse a pasta:
 
 > \$ cd FastFeet-Web
 
 - Its necessary to have yarn package installed
 
-Install dependencies:
+Instale as dependências:
 
 > \$ yarn
 
-Run Application:
+Execute o script:
 
 > \$ yarn start
 
