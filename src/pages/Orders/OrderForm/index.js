@@ -26,6 +26,15 @@ export default function OrderForm({ match }) {
       const response = await api.get(`orders/${id}`);
       const { data } = response;
 
+      ref.current.setFieldValue('recipient_id', {
+        value: response.data.recipient.id,
+        label: response.data.recipient.recipient_name,
+      });
+      ref.current.setFieldValue('deliveryman_id', {
+        value: response.data.deliveryman.id,
+        label: response.data.deliveryman.name,
+      });
+
       setOrderData(data);
     }
 
