@@ -116,7 +116,7 @@ export default function RecipientForm({ match }) {
     }
   }
 
-  function handleSubmmit(data) {
+  function handleSubmit(data) {
     if (id) {
       editRecipient(data);
     } else {
@@ -138,7 +138,7 @@ export default function RecipientForm({ match }) {
         </Buttons>
       </InitialContent>
       <FormContainer>
-        <Form ref={ref} initialData={recipientData} onSubmit={handleSubmmit}>
+        <Form ref={ref} initialData={recipientData} onSubmit={handleSubmit}>
           <Input
             name="recipient_name"
             type="text"

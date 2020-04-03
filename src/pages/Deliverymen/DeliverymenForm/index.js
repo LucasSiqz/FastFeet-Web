@@ -87,7 +87,7 @@ export default function DeliverymenForm({ match }) {
     }
   }
 
-  function handleSubmmit(data) {
+  function handleSubmit(data) {
     if (id) {
       editDeliveryman(data);
     } else {
@@ -109,7 +109,7 @@ export default function DeliverymenForm({ match }) {
         </Buttons>
       </InitialContent>
       <FormContainer>
-        <Form ref={ref} initialData={deliverymanData} onSubmit={handleSubmmit}>
+        <Form ref={ref} initialData={deliverymanData} onSubmit={handleSubmit}>
           <AvatarContainer>
             <AvatarInput name="avatar_id" />
           </AvatarContainer>

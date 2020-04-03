@@ -156,7 +156,7 @@ export default function OrderForm({ match }) {
     }
   }
 
-  function handleSubmmit(data) {
+  function handleSubmit(data) {
     if (id) {
       editOrder(data);
     } else {
@@ -178,7 +178,7 @@ export default function OrderForm({ match }) {
         </Buttons>
       </InitialContent>
       <FormContainer>
-        <Form ref={ref} initialData={orderData} onSubmit={handleSubmmit}>
+        <Form ref={ref} initialData={orderData} onSubmit={handleSubmit}>
           <aside>
             <AsyncSelectInput
               type="text"
