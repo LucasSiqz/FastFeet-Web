@@ -1,18 +1,25 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useField } from '@unform/core';
 import { MdInsertPhoto } from 'react-icons/md';
+import PropTypes from 'prop-types';
 
 import api from '~/services/api';
 
 import { Container, DefaultContent } from './styles';
 
-export default function AvatarInput() {
+export default function AvatarInput({ initialUrl }) {
   const { defaultValue, registerField } = useField('avatar');
 
   const [file, setFile] = useState(defaultValue && defaultValue.id);
-  const [preview, setPreview] = useState(defaultValue && defaultValue.url);
+  const [preview, setPreview] = useState(null);
 
   const ref = useRef();
+
+  useEffect(() => {
+    if (initialUrl) {
+      setPreview(initialUrl);
+    }
+  }, [initialUrl]);
 
   useEffect(() => {
     if (ref.current) {
@@ -61,3 +68,11 @@ export default function AvatarInput() {
     </Container>
   );
 }
+
+AvatarInput.propTypes = {
+  initialUrl: PropTypes.string,
+};
+
+AvatarInput.defaultProps = {
+  initialUrl: null,
+};

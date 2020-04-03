@@ -23,6 +23,7 @@ import {
 export default function DeliverymenForm({ match }) {
   const { id } = match.params;
   const [deliverymanData, setDeliverymanData] = useState({});
+  const [url, setUrl] = useState(null);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -31,6 +32,9 @@ export default function DeliverymenForm({ match }) {
       const { data } = response;
 
       setDeliverymanData(data);
+      if (data.avatar) {
+        setUrl(data.avatar.url);
+      }
     }
     if (id) {
       loadInitialData();
@@ -111,7 +115,7 @@ export default function DeliverymenForm({ match }) {
       <FormContainer>
         <Form ref={ref} initialData={deliverymanData} onSubmit={handleSubmit}>
           <AvatarContainer>
-            <AvatarInput name="avatar_id" />
+            <AvatarInput name="avatar_id" initialUrl={url} />
           </AvatarContainer>
           <Input name="name" type="text" label="Nome" placeholder="John Doe" />
           <Input
