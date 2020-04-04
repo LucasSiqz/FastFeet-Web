@@ -11,6 +11,7 @@ import SaveButton from '~/components/SaveButton';
 import BackButton from '~/components/BackButton';
 import AvatarInput from '~/components/AvatarInput';
 import Input from '~/components/Input';
+import Loading from '~/components/Loading';
 
 import {
   Container,
@@ -24,6 +25,7 @@ export default function DeliverymenForm({ match }) {
   const { id } = match.params;
   const [deliverymanData, setDeliverymanData] = useState({});
   const [url, setUrl] = useState(null);
+  const [loading, setLoading] = useState(false);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -43,6 +45,7 @@ export default function DeliverymenForm({ match }) {
 
   async function createNewDeliveryman(data) {
     try {
+      setLoading(true);
       const schema = Yup.object().shape({
         avatar: Yup.number(),
         name: Yup.string().required(),
@@ -59,15 +62,18 @@ export default function DeliverymenForm({ match }) {
 
       await api.post('deliverymans', { name, email, avatar_id });
 
+      setLoading(false);
       toast.success('Entregador cadastrado com sucesso!');
       history.push('/deliverymen');
     } catch (err) {
+      setLoading(false);
       toast.error('Erro ao cadastrar entregador, Verifique os dados!');
     }
   }
 
   async function editDeliveryman(data) {
     try {
+      setLoading(true);
       const schema = Yup.object().shape({
         avatar: Yup.number(),
         name: Yup.string().required(),
@@ -84,9 +90,11 @@ export default function DeliverymenForm({ match }) {
 
       await api.put(`deliverymans/${id}`, { name, email, avatar_id });
 
+      setLoading(false);
       toast.success('Entregador editado com sucesso!');
       history.push('/deliverymen');
     } catch (err) {
+      setLoading(false);
       toast.error('Erro ao editar entregador, Verifique os dados!');
     }
   }
@@ -101,34 +109,49 @@ export default function DeliverymenForm({ match }) {
 
   return (
     <Container>
-      <InitialContent>
-        {id ? (
-          <strong>Edição de entregadores</strong>
-        ) : (
-          <strong>Cadastro de entregadores</strong>
-        )}
-        <Buttons>
-          <BackButton />
-          <SaveButton onClick={() => ref.current.submitForm()} />
-        </Buttons>
-      </InitialContent>
-      <FormContainer>
-        <Form ref={ref} initialData={deliverymanData} onSubmit={handleSubmit}>
-          <AvatarContainer>
-            <AvatarInput name="avatar_id" initialUrl={url} />
-          </AvatarContainer>
-          <Input name="name" type="text" label="Nome" placeholder="John Doe" />
-          <Input
-            name="email"
-            type="email"
-            label="Email"
-            placeholder="exemplo@rocketseat.com"
-            onKeyPress={e =>
-              e.key === 'Enter' ? ref.current.submitForm() : null
-            }
-          />
-        </Form>
-      </FormContainer>
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <InitialContent>
+            {id ? (
+              <strong>Edição de entregadores</strong>
+            ) : (
+              <strong>Cadastro de entregadores</strong>
+            )}
+            <Buttons>
+              <BackButton />
+              <SaveButton onClick={() => ref.current.submitForm()} />
+            </Buttons>
+          </InitialContent>
+          <FormContainer>
+            <Form
+              ref={ref}
+              initialData={deliverymanData}
+              onSubmit={handleSubmit}
+            >
+              <AvatarContainer>
+                <AvatarInput name="avatar_id" initialUrl={url} />
+              </AvatarContainer>
+              <Input
+                name="name"
+                type="text"
+                label="Nome"
+                placeholder="John Doe"
+              />
+              <Input
+                name="email"
+                type="email"
+                label="Email"
+                placeholder="exemplo@rocketseat.com"
+                onKeyPress={e =>
+                  e.key === 'Enter' ? ref.current.submitForm() : null
+                }
+              />
+            </Form>
+          </FormContainer>
+        </>
+      )}
     </Container>
   );
 }

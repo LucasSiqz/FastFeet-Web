@@ -10,12 +10,14 @@ import api from '~/services/api';
 import SaveButton from '~/components/SaveButton';
 import BackButton from '~/components/BackButton';
 import Input from '~/components/Input';
+import Loading from '~/components/Loading';
 
 import { Container, InitialContent, Buttons, FormContainer } from './styles';
 
 export default function RecipientForm({ match }) {
   const { id } = match.params;
   const [recipientData, setRecipientData] = useState({});
+  const [loading, setLoading] = useState(false);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -32,6 +34,7 @@ export default function RecipientForm({ match }) {
 
   async function createNewRecipient(data) {
     try {
+      setLoading(true);
       const schema = Yup.object().shape({
         recipient_name: Yup.string().required(),
         street: Yup.string().required(),
@@ -66,15 +69,18 @@ export default function RecipientForm({ match }) {
         cep,
       });
 
+      setLoading(false);
       toast.success('Destinatário cadastrado com sucesso!');
       history.push('/recipients');
     } catch (err) {
+      setLoading(false);
       toast.error('Erro ao cadastrar destinatário, Verifique os dados!');
     }
   }
 
   async function editRecipient(data) {
     try {
+      setLoading(true);
       const schema = Yup.object().shape({
         recipient_name: Yup.string().required(),
         street: Yup.string().required(),
@@ -109,9 +115,11 @@ export default function RecipientForm({ match }) {
         cep,
       });
 
+      setLoading(false);
       toast.success('Destinatário editado com sucesso!');
       history.push('/recipients');
     } catch (err) {
+      setLoading(false);
       toast.error('Erro ao editar destinatário, Verifique os dados!');
     }
   }
@@ -126,67 +134,73 @@ export default function RecipientForm({ match }) {
 
   return (
     <Container>
-      <InitialContent>
-        {id ? (
-          <strong>Edição de destinatários</strong>
-        ) : (
-          <strong>Cadastro de destinatários</strong>
-        )}
-        <Buttons>
-          <BackButton />
-          <SaveButton onClick={() => ref.current.submitForm()} />
-        </Buttons>
-      </InitialContent>
-      <FormContainer>
-        <Form ref={ref} initialData={recipientData} onSubmit={handleSubmit}>
-          <Input
-            name="recipient_name"
-            type="text"
-            label="Nome"
-            placeholder="Ludwig van Beethoven"
-          />
-          <div>
-            <span>
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <InitialContent>
+            {id ? (
+              <strong>Edição de destinatários</strong>
+            ) : (
+              <strong>Cadastro de destinatários</strong>
+            )}
+            <Buttons>
+              <BackButton />
+              <SaveButton onClick={() => ref.current.submitForm()} />
+            </Buttons>
+          </InitialContent>
+          <FormContainer>
+            <Form ref={ref} initialData={recipientData} onSubmit={handleSubmit}>
               <Input
-                name="street"
+                name="recipient_name"
                 type="text"
-                label="Rua"
-                placeholder="Rua Beethoven"
+                label="Nome"
+                placeholder="Ludwig van Beethoven"
               />
-            </span>
-            <Input
-              name="number"
-              type="text"
-              label="Número"
-              placeholder="1729"
-            />
-            <Input name="complement" type="text" label="Complemento" />
-          </div>
-          <div>
-            <Input
-              name="city"
-              type="text"
-              label="Cidade"
-              placeholder="Diadema"
-            />
-            <Input
-              name="state"
-              type="text"
-              label="Estado"
-              placeholder="São Paulo"
-            />
-            <Input
-              name="cep"
-              type="text"
-              label="cep"
-              placeholder="09960-580"
-              onKeyPress={e =>
-                e.key === 'Enter' ? ref.current.submitForm() : null
-              }
-            />
-          </div>
-        </Form>
-      </FormContainer>
+              <div>
+                <span>
+                  <Input
+                    name="street"
+                    type="text"
+                    label="Rua"
+                    placeholder="Rua Beethoven"
+                  />
+                </span>
+                <Input
+                  name="number"
+                  type="text"
+                  label="Número"
+                  placeholder="1729"
+                />
+                <Input name="complement" type="text" label="Complemento" />
+              </div>
+              <div>
+                <Input
+                  name="city"
+                  type="text"
+                  label="Cidade"
+                  placeholder="Diadema"
+                />
+                <Input
+                  name="state"
+                  type="text"
+                  label="Estado"
+                  placeholder="São Paulo"
+                />
+                <Input
+                  name="cep"
+                  type="text"
+                  label="cep"
+                  placeholder="09960-580"
+                  onKeyPress={e =>
+                    e.key === 'Enter' ? ref.current.submitForm() : null
+                  }
+                />
+              </div>
+            </Form>
+          </FormContainer>
+        </>
+      )}
     </Container>
   );
 }

@@ -11,6 +11,7 @@ import SaveButton from '~/components/SaveButton';
 import BackButton from '~/components/BackButton';
 import Input from '~/components/Input';
 import AsyncSelectInput from '~/components/AsyncSelectInput';
+import Loading from '~/components/Loading';
 
 import { Container, InitialContent, Buttons, FormContainer } from './styles';
 
@@ -19,6 +20,7 @@ export default function OrderForm({ match }) {
   const [orderData, setOrderData] = useState({});
   const [deliverymen, setDeliverymen] = useState([]);
   const [recipients, setRecipients] = useState([]);
+  const [loading, setLoading] = useState(false);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -104,6 +106,7 @@ export default function OrderForm({ match }) {
 
   async function createNewOrder(data) {
     try {
+      setLoading(true);
       const schema = Yup.object().shape({
         recipient_id: Yup.string().required(),
         deliveryman_id: Yup.string().required(),
@@ -122,15 +125,18 @@ export default function OrderForm({ match }) {
         product,
       });
 
+      setLoading(false);
       toast.success('Encomenda cadastrada com sucesso!');
       history.push('/orders');
     } catch (err) {
+      setLoading(false);
       toast.error('Erro ao cadastrar encomenda, Verifique os dados!');
     }
   }
 
   async function editOrder(data) {
     try {
+      setLoading(true);
       const schema = Yup.object().shape({
         recipient_id: Yup.string().required(),
         deliveryman_id: Yup.string().required(),
@@ -149,9 +155,11 @@ export default function OrderForm({ match }) {
         product,
       });
 
+      setLoading(false);
       toast.success('Entregas editado com sucesso!');
       history.push('/orders');
     } catch (err) {
+      setLoading(false);
       toast.error('Erro ao editar entregas, Verifique os dados!');
     }
   }
@@ -166,52 +174,58 @@ export default function OrderForm({ match }) {
 
   return (
     <Container>
-      <InitialContent>
-        {id ? (
-          <strong>Edição de encomendas</strong>
-        ) : (
-          <strong>Cadastro de encomendas</strong>
-        )}
-        <Buttons>
-          <BackButton />
-          <SaveButton onClick={() => ref.current.submitForm()} />
-        </Buttons>
-      </InitialContent>
-      <FormContainer>
-        <Form ref={ref} initialData={orderData} onSubmit={handleSubmit}>
-          <aside>
-            <AsyncSelectInput
-              type="text"
-              label="Destinatário"
-              name="recipient_id"
-              placeholder="Ludwig van Beethoven"
-              noOptionsMessage={() => 'Nenhum destinatário encontrado'}
-              loadOptions={recipientsOptions}
-              styles={customStylesSelectInput}
-            />
-            <AsyncSelectInput
-              type="text"
-              label="Entregador"
-              name="deliveryman_id"
-              placeholder="John Doe"
-              noOptionsMessage={() => 'Nenhum entregador encontrado'}
-              loadOptions={deliverymenOptions}
-              styles={customStylesSelectInput}
-            />
-          </aside>
-          <span>
-            <Input
-              name="product"
-              type="text"
-              label="Nome do produto"
-              placeholder="Yamaha SX7"
-              onKeyPress={e =>
-                e.key === 'Enter' ? ref.current.submitForm() : null
-              }
-            />
-          </span>
-        </Form>
-      </FormContainer>
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <InitialContent>
+            {id ? (
+              <strong>Edição de encomendas</strong>
+            ) : (
+              <strong>Cadastro de encomendas</strong>
+            )}
+            <Buttons>
+              <BackButton />
+              <SaveButton onClick={() => ref.current.submitForm()} />
+            </Buttons>
+          </InitialContent>
+          <FormContainer>
+            <Form ref={ref} initialData={orderData} onSubmit={handleSubmit}>
+              <aside>
+                <AsyncSelectInput
+                  type="text"
+                  label="Destinatário"
+                  name="recipient_id"
+                  placeholder="Ludwig van Beethoven"
+                  noOptionsMessage={() => 'Nenhum destinatário encontrado'}
+                  loadOptions={recipientsOptions}
+                  styles={customStylesSelectInput}
+                />
+                <AsyncSelectInput
+                  type="text"
+                  label="Entregador"
+                  name="deliveryman_id"
+                  placeholder="John Doe"
+                  noOptionsMessage={() => 'Nenhum entregador encontrado'}
+                  loadOptions={deliverymenOptions}
+                  styles={customStylesSelectInput}
+                />
+              </aside>
+              <span>
+                <Input
+                  name="product"
+                  type="text"
+                  label="Nome do produto"
+                  placeholder="Yamaha SX7"
+                  onKeyPress={e =>
+                    e.key === 'Enter' ? ref.current.submitForm() : null
+                  }
+                />
+              </span>
+            </Form>
+          </FormContainer>
+        </>
+      )}
     </Container>
   );
 }
