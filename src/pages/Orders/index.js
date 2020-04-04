@@ -29,10 +29,12 @@ export default function Orders() {
   }, []);
 
   async function updateOrders() {
+    setLoading(true);
     const response = await api.get('orders');
     const { data } = response;
 
     setOrders(data);
+    setLoading(false);
   }
 
   async function onChange(event) {

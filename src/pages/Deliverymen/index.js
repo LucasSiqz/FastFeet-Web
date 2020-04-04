@@ -6,6 +6,7 @@ import history from '~/services/history';
 import DeliverymenItem from './DeliverymenItem';
 import AddButton from '~/components/AddButton';
 import SearchInput from '~/components/SearchInput';
+import Loading from '~/components/Loading';
 
 import {
   Container,
@@ -16,23 +17,28 @@ import {
 
 export default function Deliverymen() {
   const [deliverymen, setDeliverymen] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function loadDeliverymen() {
+      setLoading(true);
       const response = await api.get('deliverymans');
       const { data } = response;
 
       setDeliverymen(data);
+      setLoading(false);
     }
 
     loadDeliverymen();
   }, []);
 
   async function updateDeliverymen() {
+    setLoading(true);
     const response = await api.get('deliverymans');
     const { data } = response;
 
     setDeliverymen(data);
+    setLoading(false);
   }
 
   async function onChange(event) {
@@ -44,33 +50,39 @@ export default function Deliverymen() {
 
   return (
     <Container>
-      <InitialContent>
-        <strong>Gerenciando entregadores</strong>
-        <aside>
-          <SearchInput onChange={onChange} placeholder="entregadores" />
-          <AddButton onClick={() => history.push('/deliverymen/new')} />
-        </aside>
-      </InitialContent>
-      <DeliverymenList>
-        <thead>
-          <ItemsTitles>
-            <th>ID</th>
-            <th>Foto</th>
-            <th>Nome</th>
-            <th>Email</th>
-            <th>Ações</th>
-          </ItemsTitles>
-        </thead>
-        <tbody>
-          {deliverymen.map(deliveryman => (
-            <DeliverymenItem
-              key={deliveryman.id}
-              deliveryman={deliveryman}
-              updateDeliverymen={updateDeliverymen}
-            />
-          ))}
-        </tbody>
-      </DeliverymenList>
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <InitialContent>
+            <strong>Gerenciando entregadores</strong>
+            <aside>
+              <SearchInput onChange={onChange} placeholder="entregadores" />
+              <AddButton onClick={() => history.push('/deliverymen/new')} />
+            </aside>
+          </InitialContent>
+          <DeliverymenList>
+            <thead>
+              <ItemsTitles>
+                <th>ID</th>
+                <th>Foto</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Ações</th>
+              </ItemsTitles>
+            </thead>
+            <tbody>
+              {deliverymen.map(deliveryman => (
+                <DeliverymenItem
+                  key={deliveryman.id}
+                  deliveryman={deliveryman}
+                  updateDeliverymen={updateDeliverymen}
+                />
+              ))}
+            </tbody>
+          </DeliverymenList>
+        </>
+      )}
     </Container>
   );
 }
