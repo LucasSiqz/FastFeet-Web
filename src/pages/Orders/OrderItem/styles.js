@@ -200,8 +200,7 @@ export const ModalContainer = styled.div`
   }
 
   img {
-    max-width: 234px;
-    height: 36px;
+    max-width: 100%;
   }
 `;
 
