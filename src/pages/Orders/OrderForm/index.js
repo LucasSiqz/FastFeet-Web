@@ -78,14 +78,8 @@ export default function OrderForm({ match }) {
     }),
   };
 
-  async function filterDeliverymen(inputValue) {
-    return deliverymen.filter(i =>
-      i.label.toLowerCase().includes(inputValue.toLowerCase())
-    );
-  }
-
-  async function filterRecipients(inputValue) {
-    return recipients.filter(i =>
+  async function filterOptions(inputValue, list) {
+    return list.filter(i =>
       i.label.toLowerCase().includes(inputValue.toLowerCase())
     );
   }
@@ -93,14 +87,14 @@ export default function OrderForm({ match }) {
   const deliverymenOptions = inputValue =>
     new Promise(resolve => {
       setTimeout(() => {
-        resolve(filterDeliverymen(inputValue));
+        resolve(filterOptions(inputValue, deliverymen));
       }, 1000);
     });
 
   const recipientsOptions = inputValue =>
     new Promise(resolve => {
       setTimeout(() => {
-        resolve(filterRecipients(inputValue));
+        resolve(filterOptions(inputValue, recipients));
       }, 1000);
     });
 
